@@ -14,6 +14,22 @@
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
 
+<!-- Open Graph -->
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+{{ if .Params.image }}<meta property="og:image" content="{{ .Params.image | absURL }}" />{{ else if .Site.Params.og_image }}<meta property="og:image" content="{{ .Site.Params.og_image | absURL }}" />{{ end }}
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+{{ if .IsPage }}<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}" />
+{{ with .Params.tags }}{{ range . }}<meta property="article:tag" content="{{ . }}" />{{ end }}{{ end }}{{ end }}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ .Title }}" />
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}" />
+{{ if .Params.image }}<meta name="twitter:image" content="{{ .Params.image | absURL }}" />{{ end }}
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124487568-2"></script>
 <script>
